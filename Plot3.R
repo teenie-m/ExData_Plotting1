@@ -1,8 +1,9 @@
 classes <- rep("character", times = 9)
 data <- read.table("household_power_consumption.txt", header = TRUE, sep = ";", colClasses = classes)
 data$Date <- as.Date(data$Date, format = "%d/%m/%Y")
-subset <- data[data$Date == (as.Date("2007-02-02") | as.Date("2007-02-01")), ]
 
+subset <- data[data$Date == as.Date("2007-02-02") | data$Date == as.Date("2007-02-01"), ]
+subset[,3:9] <- sapply(3:9, function(x) {as.numeric(subset[,x])})
 subset$datetime <- as.POSIXct(paste(subset$Date, subset$Time), format = "%Y-%m-%d %H:%M:%S")
 
 png(filename = "plot3.png")
